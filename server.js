@@ -1,30 +1,21 @@
 //import necessary modules
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
 //creating an express application instance
 const app = express();
 
-//define port for the server to listen on:
-//process.env.PORT for deployed services(netlify)
-const PORT = 3000;
+const PORT = process.env.PORT | 3000; //process.env.PORT will be assigned by render
 
 //CORS setup
-// const allowedOrigins = [
-//   process.env.FRONTEND_URL, // Example: 'https://your-netlify-app-domain.netlify.app'
-// ];
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true); // Allow the request
-//     } else {
-//       callback(new Error("Not allowed by CORS")); // Deny the request
-//     }
-//   },
-// };
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true, // only if you're sending cookies or auth headers
+  })
+);
 
-//MIDDLEWARE
-// app.use(cors(corsOptions));
 //middleware to parse incoming request bodies with json payloads
 app.use(express.json());
 
