@@ -6,7 +6,7 @@ const cors = require("cors");
 //creating an express application instance
 const app = express();
 
-const PORT = process.env.PORT | 3000; //process.env.PORT will be assigned by render
+const PORT = process.env.PORT | 5000; //process.env.PORT will be assigned by render
 
 //CORS setup
 app.use(
@@ -18,6 +18,15 @@ app.use(
 
 //middleware to parse incoming request bodies with json payloads
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json("request incoming");
+});
+
+//testing for a request
+app.get("/getQuote", (req, res) => {
+  res.json({ quote: "Let the day unfold..." });
+});
 
 //Server start
 app.listen(PORT, () => {
