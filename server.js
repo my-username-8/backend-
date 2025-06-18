@@ -8,9 +8,6 @@ const app = express();
 
 const PORT = process.env.PORT | 5000; //process.env.PORT will be assigned by render
 
-//database connection established
-connectDB();
-
 //CORS setup
 app.use(
   cors({
@@ -31,7 +28,17 @@ app.get("/getQuote", (req, res) => {
   res.json({ quote: "Let the day unfold..." });
 });
 
-//Server start
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+//Database connect and Server start
+
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Failed to connect to database. Server not started.");
+  }
+};
+
+startServer();
